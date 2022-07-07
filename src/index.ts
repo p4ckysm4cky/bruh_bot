@@ -11,7 +11,7 @@ client.commands = new Collection();
 const commandsPath = path.join(__dirname, "commands");
 const commandFiles = fs
     .readdirSync(commandsPath)
-    .filter((file:any) => file.endsWith(".js") || file.endsWith(".ts"));
+    .filter((file: any) => file.endsWith(".js") || file.endsWith(".ts"));
 
 for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
@@ -26,19 +26,22 @@ client.once("ready", () => {
     client.user.setActivity("to WUB WUB", { type: "LISTENING" });
 });
 
-client.on('interactionCreate', async (interaction:any) => {
-	if (!interaction.isCommand()) return;
+client.on("interactionCreate", async (interaction: any) => {
+    if (!interaction.isCommand()) return;
 
-	const command = client.commands.get(interaction.commandName);
+    const command = client.commands.get(interaction.commandName);
 
-	if (!command) return;
+    if (!command) return;
 
-	try {
-		await command.execute(interaction);
-	} catch (error) {
-		console.error(error);
-		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-	}
+    try {
+        await command.execute(interaction);
+    } catch (error) {
+        console.error(error);
+        await interaction.reply({
+            content: "There was an error while executing this command!",
+            ephemeral: true,
+        });
+    }
 });
 
 // Login to Discord with your client's token
