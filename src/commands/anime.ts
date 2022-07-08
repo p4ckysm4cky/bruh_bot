@@ -3,6 +3,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
 import { request } from "graphql-request";
 import { searchAnimeQuery } from "../anilistGql/queries/animeQueries";
+import { cleanDescription, genAnimeEmbed } from "../anilistGql/helperFunctions";
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -22,20 +23,20 @@ module.exports = {
         // Info from graphql endpoint
         const siteUrl: string = data.Media.siteUrl;
         const episodes: number = data.Media.episodes;
-        const description: string = data.Media.description;
+        const description: string = cleanDescription(data.Media.description);
         const color: string = data.Media.coverImage.color;
         const coverImage: string = data.Media.coverImage.extraLarge;
         const title: string = data.Media.title.userPreferred;
         const bannerImage: string = data.Media.bannerImage;
 
-        const embed = new MessageEmbed()
-            .setColor(color)
-            .setTitle(title)
-            .setURL(siteUrl)
-            .setDescription(description)
-            .setImage(coverImage)
-            .addFields({ name: `Episodes ${episodes}`, value: "\u200B" })
-            .setFooter({ text: "Powered by anilist.co" });
+        const embed = genAnimeEmbed(
+            color,
+            title,
+            siteUrl,
+            description,
+            coverImage,
+            episodes
+        );
 
         await interaction.reply({ embeds: [embed] });
     },
