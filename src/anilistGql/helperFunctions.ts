@@ -35,3 +35,31 @@ export function genMediaEmbed(
     }
     return embed;
 }
+
+export function genCharacterEmbed(
+    name: string,
+    image: string,
+    age: any = null,
+    gender: any = null,
+    siteUrl: string,
+    description: string
+): any {
+    const embed = new MessageEmbed()
+        .setColor("00C09A")
+        .setTitle(name)
+        .setThumbnail(image)
+        .setURL(siteUrl)
+        .setDescription(description)
+        .setFooter({ text: "Powered by anilist.co" });
+    if (age) {
+        embed.addFields({ name: "\u200B", value: `Age: ${age}`, inline: true });
+    }
+    if (gender) {
+        embed.addFields({
+            name: "\u200B",
+            value: `${gender}`,
+            inline: true,
+        });
+    }
+    return embed;
+}
