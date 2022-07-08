@@ -7,18 +7,21 @@ const { MessageEmbed } = require("discord.js");
  */
 export function cleanDescription(description: string): string {
     // This is used
+    let cleanDescription: string = "";
     const matchTags: RegExp = /\<(\\|\/)?[a-z[A-Z]*\>/g;
-    const cleanDescription = description.replace(matchTags, "");
+    if (description) {
+        cleanDescription = description.replace(matchTags, "");
+    }
     return cleanDescription;
 }
 
-export function genAnimeEmbed(
+export function genMediaEmbed(
     color: string,
     title: string,
     siteUrl: string,
     description: string,
     coverImage: string,
-    episodes: number
+    episodes: any = null
 ): any {
     const embed = new MessageEmbed()
         .setColor(color)
