@@ -1,6 +1,5 @@
 export {};
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const { MessageEmbed } = require("discord.js");
 import { request } from "graphql-request";
 import { searchAnimeQuery } from "../anilistGql/queries/animeQueries";
 import { cleanDescription, genMediaEmbed } from "../anilistGql/helperFunctions";

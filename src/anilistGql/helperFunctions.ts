@@ -63,3 +63,43 @@ export function genCharacterEmbed(
     }
     return embed;
 }
+
+export function genUserEmbed(
+    name: string,
+    about: string,
+    avatar: string,
+    siteUrl: string,
+    animeMeanScore: number,
+    episodesWatched: number,
+    mangaMeanScore: number,
+    chaptersRead: number
+) {
+    const embed = new MessageEmbed()
+        .setColor("00C09A")
+        .setTitle(name)
+        .setDescription(about)
+        .setThumbnail(avatar)
+        .setURL(siteUrl)
+        .addFields({
+            name: "\u200B",
+            value: `📺 Average anime rating: ${animeMeanScore}`,
+            inline: false,
+        })
+        .addFields({
+            name: "\u200B",
+            value: `📺 Total episodes watched: ${episodesWatched}`,
+            inline: false,
+        })
+        .addFields({
+            name: "\u200B",
+            value: `📚 Average manga rating: ${mangaMeanScore}`,
+            inline: false,
+        })
+        .addFields({
+            name: "\u200B",
+            value: `📚 Total chapters read: ${chaptersRead}`,
+            inline: false,
+        })
+        .setFooter({ text: "Powered by anilist.co" });
+    return embed;
+}
