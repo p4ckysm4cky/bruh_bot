@@ -47,7 +47,10 @@ module.exports = {
             let imageUrl: string = `https://safebooru.org/images/${directory}/${image}`;
             await interaction.reply(`${imageUrl}`);
         } catch (e) {
-            await interaction.reply(e);
+            await interaction.reply({
+                content: `${e}`,
+                ephemeral: true,
+            });
         }
     },
 };
