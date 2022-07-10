@@ -13,4 +13,6 @@
 - [ ] Check / clean up code
 - [ ] make search staff command
 - [ ] fix eslint
+- [ ] safebooru command
+  - [ ] review over to make sure code is okay
 
