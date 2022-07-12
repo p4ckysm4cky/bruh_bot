@@ -33,7 +33,7 @@ async function querySafeBooru(tags: string[]) {
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("safebooru")
-        .setDescription("Replies with image of the first result")
+        .setDescription("Image of the first result found on safebooru")
         .addStringOption((option: any) =>
             option
                 .setName("tags")

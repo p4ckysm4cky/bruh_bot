@@ -10,7 +10,7 @@ import {
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("character")
-        .setDescription("returns info about anime character")
+        .setDescription("displays info about the searched anime character")
         .addStringOption((option: any) =>
             option
                 .setName("name")

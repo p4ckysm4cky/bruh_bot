@@ -11,7 +11,7 @@ import {
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("anilist")
-        .setDescription("Replies with anilist profile")
+        .setDescription("Provides information of the anilist user")
         .addStringOption((option: any) =>
             option
                 .setName("username")

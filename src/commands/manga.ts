@@ -7,7 +7,7 @@ import { cleanDescription, genMediaEmbed } from "../anilistGql/helperFunctions";
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("manga")
-        .setDescription("Replies with manga info")
+        .setDescription("Information about the manga searched")
         .addStringOption((option: any) =>
             option
                 .setName("name")
