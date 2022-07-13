@@ -1,26 +1,26 @@
 export {};
-const { SlashCommandBuilder } = require("@discordjs/builders");
-import { request } from "graphql-request";
-import { searchUserQuery } from "../anilistGql/queries/userQueries";
+import { SlashCommandBuilder } from '@discordjs/builders';
+import { request } from 'graphql-request';
+import { searchUserQuery } from '../anilistGql/queries/userQueries';
 import {
     cleanDescription,
     genMediaEmbed,
     genUserEmbed,
-} from "../anilistGql/helperFunctions";
+} from '../anilistGql/helperFunctions';
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName("anilist")
-        .setDescription("Provides information of the anilist user")
+        .setName('anilist')
+        .setDescription('Provides information of the anilist user')
         .addStringOption((option: any) =>
             option
-                .setName("username")
-                .setDescription("Username of user")
-                .setRequired(true)
+                .setName('username')
+                .setDescription('Username of user')
+                .setRequired(true),
         ),
     async execute(interaction: any) {
-        const endpoint: string = "https://graphql.anilist.co";
-        const variables = { user: interaction.options.getString("username") };
+        const endpoint = 'https://graphql.anilist.co';
+        const variables = { user: interaction.options.getString('username') };
         const data = await request(endpoint, searchUserQuery, variables);
 
         // Info from graphql endpoint
@@ -43,7 +43,7 @@ module.exports = {
             animeMeanScore,
             episodesWatched,
             mangaMeanScore,
-            chaptersRead
+            chaptersRead,
         );
 
         await interaction.reply({ embeds: [embed] });

@@ -1,17 +1,17 @@
-require("dotenv").config();
+require('dotenv').config();
 const TOKEN = process.env.TOKEN;
-const fs = require("node:fs");
-const path = require("node:path");
-const { Client, Collection, Intents } = require("discord.js");
+const fs = require('node:fs');
+const path = require('node:path');
+const { Client, Collection, Intents } = require('discord.js');
 
 // Create a new client instance
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 client.commands = new Collection();
-const commandsPath = path.join(__dirname, "commands");
+const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs
     .readdirSync(commandsPath)
-    .filter((file: any) => file.endsWith(".js") || file.endsWith(".ts"));
+    .filter((file: any) => file.endsWith('.js') || file.endsWith('.ts'));
 
 for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
@@ -21,12 +21,12 @@ for (const file of commandFiles) {
     client.commands.set(command.data.name, command);
 }
 
-client.once("ready", () => {
+client.once('ready', () => {
     console.log(`${client.user.tag} is ready`);
-    client.user.setActivity("to WUB WUB", { type: "LISTENING" });
+    client.user.setActivity('to WUB WUB', { type: 'LISTENING' });
 });
 
-client.on("interactionCreate", async (interaction: any) => {
+client.on('interactionCreate', async (interaction: any) => {
     if (!interaction.isCommand()) return;
 
     const command = client.commands.get(interaction.commandName);
@@ -39,7 +39,7 @@ client.on("interactionCreate", async (interaction: any) => {
         console.error(error);
         try {
             await interaction.reply({
-                content: "There was an error while executing this command!",
+                content: 'There was an error while executing this command!',
                 ephemeral: true,
             });
         } catch (error) {

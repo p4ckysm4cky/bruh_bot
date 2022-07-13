@@ -1,22 +1,22 @@
 export {};
-const { SlashCommandBuilder } = require("@discordjs/builders");
-import { request } from "graphql-request";
-import { searchAnimeQuery } from "../anilistGql/queries/animeQueries";
-import { cleanDescription, genMediaEmbed } from "../anilistGql/helperFunctions";
+const { SlashCommandBuilder } = require('@discordjs/builders');
+import { request } from 'graphql-request';
+import { searchAnimeQuery } from '../anilistGql/queries/animeQueries';
+import { cleanDescription, genMediaEmbed } from '../anilistGql/helperFunctions';
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName("anime")
-        .setDescription("Information about the requested anime")
+        .setName('anime')
+        .setDescription('Information about the requested anime')
         .addStringOption((option: any) =>
             option
-                .setName("name")
-                .setDescription("Name of anime you want to query")
-                .setRequired(true)
+                .setName('name')
+                .setDescription('Name of anime you want to query')
+                .setRequired(true),
         ),
     async execute(interaction: any) {
-        const endpoint: string = "https://graphql.anilist.co";
-        const variables = { animeName: interaction.options.getString("name") };
+        const endpoint = 'https://graphql.anilist.co';
+        const variables = { animeName: interaction.options.getString('name') };
         const data = await request(endpoint, searchAnimeQuery, variables);
 
         // Info from graphql endpoint
@@ -33,7 +33,7 @@ module.exports = {
             siteUrl,
             description,
             coverImage,
-            episodes
+            episodes,
         );
 
         await interaction.reply({ embeds: [embed] });
