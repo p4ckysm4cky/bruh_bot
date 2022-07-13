@@ -44,11 +44,11 @@ module.exports = {
     async execute(interaction: any) {
         const imageUrl: string = interaction.options.getString("imageurl");
         try {
-            await interaction.reply("Working on it...");
+            await interaction.deferReply();
             const embed = await queryTracerMoe(imageUrl);
-            await interaction.followUp({ embeds: [embed] });
+            await interaction.editReply({ embeds: [embed] });
         } catch (e) {
-            await interaction.followUp({
+            await interaction.editReply({
                 content: `${e}`,
                 ephemeral: true,
             });
