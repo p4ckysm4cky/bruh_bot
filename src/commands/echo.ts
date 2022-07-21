@@ -1,3 +1,5 @@
+import { Interaction } from 'discord.js';
+
 export {};
 const { SlashCommandBuilder } = require('@discordjs/builders');
 
@@ -11,8 +13,10 @@ module.exports = {
                 .setDescription('The input to echo back')
                 .setRequired(true),
         ),
-    async execute(interaction: any) {
-        const message: string = interaction.options.getString('input');
-        await interaction.reply(`${message}`);
+    async execute(interaction: Interaction) {
+        if (interaction.isCommand()) {
+            const message = interaction.options.getString('input');
+            await interaction.reply(`${message}`);
+        }
     },
 };

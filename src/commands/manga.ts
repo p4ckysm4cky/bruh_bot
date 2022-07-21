@@ -1,8 +1,9 @@
 export {};
-const { SlashCommandBuilder } = require('@discordjs/builders');
+import { SlashCommandBuilder } from '@discordjs/builders';
 import { request } from 'graphql-request';
 import { searchMangaQuery } from '../anilistGql/queries/mangaQueries';
 import { cleanDescription, genMediaEmbed } from '../anilistGql/helperFunctions';
+import { ColorResolvable, Interaction } from 'discord.js';
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -14,26 +15,32 @@ module.exports = {
                 .setDescription('Name of manga you want to query')
                 .setRequired(true),
         ),
-    async execute(interaction: any) {
-        const endpoint = 'https://graphql.anilist.co';
-        const variables = { mangaName: interaction.options.getString('name') };
-        const data = await request(endpoint, searchMangaQuery, variables);
+    async execute(interaction: Interaction) {
+        if (interaction.isCommand()) {
+            const endpoint = 'https://graphql.anilist.co';
+            const variables = {
+                mangaName: interaction.options.getString('name'),
+            };
+            const data = await request(endpoint, searchMangaQuery, variables);
 
-        // Info from graphql endpoint
-        const siteUrl: string = data.Media.siteUrl;
-        const description: string = cleanDescription(data.Media.description);
-        const color: string = data.Media.coverImage.color;
-        const coverImage: string = data.Media.coverImage.extraLarge;
-        const title: string = data.Media.title.userPreferred;
+            // Info from graphql endpoint
+            const siteUrl: string = data.Media.siteUrl;
+            const description: string = cleanDescription(
+                data.Media.description,
+            );
+            const color: ColorResolvable = data.Media.coverImage.color;
+            const coverImage: string = data.Media.coverImage.extraLarge;
+            const title: string = data.Media.title.userPreferred;
 
-        const embed = genMediaEmbed(
-            color,
-            title,
-            siteUrl,
-            description,
-            coverImage,
-        );
+            const embed = genMediaEmbed(
+                color,
+                title,
+                siteUrl,
+                description,
+                coverImage,
+            );
 
-        await interaction.reply({ embeds: [embed] });
+            await interaction.reply({ embeds: [embed] });
+        }
     },
 };

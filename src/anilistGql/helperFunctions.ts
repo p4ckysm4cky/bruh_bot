@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+import { ColorResolvable, MessageEmbed } from 'discord.js';
 
 /**
  * Removes the tags from anilist descriptions
@@ -16,13 +16,13 @@ export function cleanDescription(description: string): string {
 }
 
 export function genMediaEmbed(
-    color: string,
+    color: ColorResolvable,
     title: string,
     siteUrl: string,
     description: string,
     coverImage: string,
-    episodes: any = null,
-): any {
+    episodes?: number,
+) {
     const embed = new MessageEmbed()
         .setColor(color)
         .setTitle(title)
@@ -39,13 +39,13 @@ export function genMediaEmbed(
 export function genCharacterEmbed(
     name: string,
     image: string,
-    age: any = null,
-    gender: any = null,
     siteUrl: string,
     description: string,
-): any {
+    age?: string,
+    gender?: string,
+): MessageEmbed {
     const embed = new MessageEmbed()
-        .setColor('00C09A')
+        .setColor('#00C09A')
         .setTitle(name)
         .setThumbnail(image)
         .setURL(siteUrl)
@@ -73,9 +73,9 @@ export function genUserEmbed(
     episodesWatched: number,
     mangaMeanScore: number,
     chaptersRead: number,
-) {
+): MessageEmbed {
     const embed = new MessageEmbed()
-        .setColor('00C09A')
+        .setColor('#00C09A')
         .setTitle(name)
         .setDescription(about)
         .setThumbnail(avatar)
