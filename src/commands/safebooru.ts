@@ -51,7 +51,6 @@ module.exports = {
         } catch (e) {
             await interaction.reply({
                 content: `${e}`,
-                ephemeral: true,
             });
         }
     },

@@ -50,7 +50,6 @@ module.exports = {
         } catch (e) {
             await interaction.editReply({
                 content: `${e}`,
-                ephemeral: true,
             });
         }
     },
