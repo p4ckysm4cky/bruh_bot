@@ -1,9 +1,24 @@
+import { MessageEmbed } from 'discord.js';
 export {};
 const axios = require('axios').default;
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
 
-function genEmbedTrace(traceResult: any) {
+type traceReturn = {
+    frameCount: number;
+    error: string;
+    result: traceResultAnime[];
+};
+
+type traceResultAnime = {
+    anilist: number;
+    filename: string;
+    episode: number;
+    similarity: number;
+    video: string;
+    image: string;
+};
+
+function genEmbedTrace(traceResult: traceResultAnime): MessageEmbed {
     const similarity = traceResult.similarity.toFixed(2);
     const embed = new MessageEmbed()
         .setColor('#E91E63')
@@ -21,7 +36,7 @@ async function queryTracerMoe(imageUrl: string) {
     const endpoint = `https://api.trace.moe/search?&url=${imageUrl}`;
     // Parameter for searching image
     const response = await axios.get(endpoint);
-    const data = response.data;
+    const data: traceReturn = response.data;
     // Check if no errors;
     if (data.error !== undefined) {
         const firstResult = data.result[0];
